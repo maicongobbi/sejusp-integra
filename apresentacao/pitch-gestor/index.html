@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEJUSP Integra — Pitch</title>
+<style>
+:root{
+  --bg:#070d1a; --ink:#0b1426; --ink2:#334155; --mute:#64748b; --line:#e2e8f0;
+  --navy:#0b2545; --gold:#d4a017; --gold2:#f5c542; --goldbg:#fdf6e3;
+  --coord:#c27c0e; --bomb:#c2410c; --pm:#1d4ed8; --pc:#7e22ce; --hum:#047857; --hum-bg:#e3f6ef;
+  --dc:#0e7490; --sau:#be123c; --tra:#4d7c0f; --int:#334155;
+  --rel:#b45309; --rel-bg:#fef3c7; --conf:#047857; --conf-bg:#d1fae5; --cont:#b91c1c; --cont-bg:#fee2e2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);overflow:hidden;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink)}
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+.deck{width:1280px;height:720px;position:relative}
+.slide{position:absolute;inset:0;background:#fff;border-radius:6px;overflow:hidden;padding:56px 72px 64px;display:none;flex-direction:column}
+.slide.active{display:flex}
+.slide.dark{background:radial-gradient(1200px 600px at 85% 10%,#16345f 0%,#0b2545 45%,#071830 100%);color:#e8eef8}
+.dark h1,.dark h2{color:#fff}
+.dark p,.dark li{color:#c9d6ea}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#a16207;margin-bottom:10px}
+.dark .kicker{color:var(--gold2)}
+h1{font-size:62px;line-height:1.04;font-weight:800;letter-spacing:-.02em}
+h2{font-size:38px;line-height:1.1;font-weight:780;letter-spacing:-.01em;color:var(--navy);margin-bottom:24px}
+h3{font-size:19px;font-weight:700;margin-bottom:6px}
+p,li{font-size:19px;line-height:1.45;color:var(--ink2)}
+.small{font-size:15px}.tiny{font-size:12px;color:var(--mute)}
+.mono{font-family:"Cascadia Mono",Consolas,monospace}
+.gold{color:var(--gold2)}
+.hl{background:linear-gradient(transparent 58%,#fde68a 58%);padding:0 2px}
+.foot{position:absolute;left:72px;right:72px;bottom:22px;display:flex;justify-content:space-between;font-size:12px;color:var(--mute)}
+.dark .foot{color:#7f93b3}
+.illus{position:absolute;top:18px;right:20px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#7c2d12;background:#ffedd5;border:1px solid #fdba74;border-radius:999px;padding:4px 10px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:#fff}
+.card.soft{background:#f6f8fb;border-color:transparent}
+.dark .card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px;line-height:1.6;white-space:nowrap}
+.s-rel{background:var(--rel-bg);color:var(--rel)}.s-conf{background:var(--conf-bg);color:var(--conf)}.s-cont{background:var(--cont-bg);color:var(--cont)}.s-ag{background:#e0e7ff;color:#3730a3}
+.av{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex:none}
+.src{font-family:Consolas,monospace;font-size:11px;background:#f1f5f9;color:#334155;border-radius:5px;padding:1px 6px;white-space:nowrap}
+.yes{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #e8edf3}
+.yes:last-child{border-bottom:0}
+.yes .n{width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--gold2);font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;font-size:18px}
+.yes p{font-size:22px;color:var(--ink)}
+.agent{border-radius:14px;padding:14px 16px;color:#fff;min-height:118px;display:flex;flex-direction:column;justify-content:space-between}
+.agent b{font-size:17px}.agent span{font-size:12.5px;opacity:.9;line-height:1.35}
+.agent.new{background:#fff;border:2px dashed #94a3b8;color:#475569;align-items:center;justify-content:center;text-align:center}
+.win{border:1px solid #d5dbe5;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 22px 46px -20px rgba(11,37,69,.45)}
+.win-bar{height:30px;background:#eef1f6;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid #dde3ec}
+.win-bar i{width:10px;height:10px;border-radius:50%;background:#cbd5e1;display:block}
+.win-bar span{margin-left:10px;font-size:11.5px;color:#64748b}
+.field{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid #f1f5f9;align-items:start;font-size:13px}
+.field label{font-weight:700;color:#475569;font-size:12px;padding-top:3px}
+.input{border:1px solid #d5dbe5;border-radius:7px;padding:6px 9px;color:#0f172a;background:#fff}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;border-radius:999px;padding:3px 10px;margin:0 5px 5px 0;font-weight:600}
+.chip.ok{background:#dcfce7;color:#166534}.chip.no{background:#fee2e2;color:#991b1b}.chip.nt{background:#eef2f7;color:#334155}
+.msg{display:flex;gap:10px;margin-bottom:12px}
+.msg .who{font-size:13px;font-weight:700;color:#0f172a}.msg .who small{font-weight:500;color:#94a3b8;margin-left:6px}
+.msg .txt{font-size:13.2px;line-height:1.45;color:#334155}
+.relay{display:flex;align-items:center;gap:6px;font-size:12px;color:#64748b;justify-content:center;border-top:1px solid #eef0f4;border-bottom:1px solid #eef0f4;padding:5px 0;margin-bottom:12px}
+.relay .av{width:18px;height:18px;font-size:8px;border-radius:5px}
+.answer{border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;background:#fbfcfe;margin-top:6px}
+.answer .row{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;padding:3px 0;color:#334155}
+.answer .row .pill{font-size:10px;flex:none}
+.obj{display:grid;grid-template-columns:1fr 1.5fr;gap:0;border-bottom:1px solid #e8edf3}
+.obj div{padding:13px 16px}
+.obj .q{font-weight:700;color:var(--navy);font-size:17px;font-style:italic}
+.obj .a{font-size:15.5px;color:#334155}
+.check{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.check .m{width:24px;height:24px;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff}
+.m.ok{background:#059669}.m.part{background:#d97706}
+.check p{font-size:16px}
+.phase{border-radius:14px;padding:18px;background:#fff;border:1px solid var(--line);position:relative}
+.phase .wk{font-size:12px;font-weight:800;letter-spacing:.1em;color:#a16207;text-transform:uppercase}
+.ui{position:fixed;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08);z-index:5}
+.ui .bar{height:100%;background:var(--gold2);width:0;transition:width .25s}
+.counter{position:fixed;right:16px;bottom:12px;font-size:12px;color:#7f93b3;z-index:5}
+.hint{position:fixed;left:16px;bottom:12px;font-size:12px;color:#5d7090;z-index:5}
+.notes{display:none}
+#notesPanel{position:fixed;left:0;right:0;bottom:4px;max-height:36vh;overflow:auto;background:#0f172a;color:#e2e8f0;border-top:1px solid #1e293b;padding:16px 24px 20px;font-size:16px;line-height:1.5;z-index:6;display:none}
+#notesPanel b{color:var(--gold2)}#notesPanel em{color:#93c5fd;font-style:normal}
+body.show-notes #notesPanel{display:block}
+body.capture .ui,body.capture .counter,body.capture .hint{display:none}
+</style>
+</head>
+<body>
+<div class="stage"><div class="deck" id="deck">
+
+<!-- 1 HOOK -->
+<section class="slide dark" data-title="Abertura">
+  <div style="display:flex;gap:6px;margin-bottom:auto;align-items:center">
+    <span class="av" style="background:var(--coord)">CO</span><span class="av" style="background:var(--bomb)">BM</span><span class="av" style="background:var(--pm)">PM</span><span class="av" style="background:var(--pc)">PC</span><span class="av" style="background:transparent;border:1.5px dashed #7f93b3;color:#9fb3d1">+N</span>
+    <span style="margin-left:12px;font-size:13px;color:#9fb3d1;letter-spacing:.1em;text-transform:uppercase;font-weight:700">SEJUSP Integra</span>
+  </div>
+  <p style="font-size:22px;color:#9fb3d1;margin-bottom:14px">14h12. Uma enchente. Uma escola isolada.</p>
+  <h1 style="max-width:1050px">A informação que você precisava <span class="gold">já tinha chegado.</span><br>Só estava no lugar errado.</h1>
+  <p style="font-size:22px;margin-top:26px;max-width:920px">Uma equipe de agentes de IA especialistas, <b style="color:#fff">configurada por você</b>, que junta as peças entre as forças e entrega ao gestor o que importa — com fonte, sem ruído, e com a decisão nas suas mãos.</p>
+  <div class="foot"><span>Proposta de piloto · cenário demonstrado com dados fictícios</span><span>≈ 10 min</span></div>
+  <aside class="notes"><b>Abertura — 45 s.</b> Comece em silêncio por 2 segundos, olhe para o gestor e diga devagar: “14h12. Uma enchente. Uma escola isolada.” Depois leia o título. Não se apresente ainda: o gancho vem antes do currículo.<br><em>Técnicas: gancho narrativo (padrão de interrupção), pressuposição (“a informação já tinha chegado” pressupõe que o problema é organização, não falta de dados), linguagem de controle (“configurada por você”, “nas suas mãos”).</em></aside>
+</section>
+
+<!-- 2 YES SET -->
+<section class="slide" data-title="Você já viveu isso">
+  <div class="kicker">O cenário que você conhece</div>
+  <h2>Em toda ocorrência grande, três coisas acontecem</h2>
+  <div style="max-width:980px">
+    <div class="yes"><span class="n">1</span><p>As informações chegam <b>ao mesmo tempo</b>, por telefone, rádio, mensagem e formulário — cada uma num lugar.</p></div>
+    <div class="yes"><span class="n">2</span><p>Um <b>boato</b> no grupo de WhatsApp corre mais rápido que a confirmação oficial.</p></div>
+    <div class="yes"><span class="n">3</span><p>Quem decide precisa perguntar a <b>cada força</b> “o que vocês já sabem?” — e esperar.</p></div>
+  </div>
+  <p style="margin-top:22px;font-size:21px;color:var(--navy)">Ninguém está errado. <b>O que falta é um lugar onde tudo isso se encontre.</b></p>
+  <div class="foot"><span>SEJUSP Integra</span><span></span></div>
+  <aside class="notes"><b>Rapport — 60 s.</b> Leia cada item e faça uma pausa curta, olhando para o gestor. Espere o aceno. Se a pessoa gestora comentar um caso real, ouça e repita as palavras dela: elas valem mais que as nossas.<br>Frase de ponte: “Ninguém está errado” — protege o orgulho das equipes atuais e evita que o gestor defenda o processo atual.<br><em>Técnicas: sequência de “sim” (yes-set), acompanhar antes de conduzir (pacing → leading), validar o status quo sem atacá-lo.</em></aside>
+</section>
+
+<!-- 3 CUSTO -->
+<section class="slide" data-title="O custo de não mudar">
+  <div class="kicker">O que se perde hoje</div>
+  <h2>Quando a informação se espalha, quem paga é quem está esperando</h2>
+  <div class="grid" style="grid-template-columns:1.15fr 1fr;gap:40px;align-items:center">
+    <div>
+      <div style="border-left:5px solid var(--gold);padding:8px 0 8px 22px">
+        <p style="font-size:25px;line-height:1.45;color:var(--ink);font-style:italic">“Disseram no grupo que retiraram todas as crianças, mas a escola ainda não confirmou. Minha filha usa cadeira de rodas. <b>Ela continua lá?</b>”</p>
+        <p class="tiny" style="margin-top:12px">Mãe de aluna · relato da simulação Santa Aurora</p>
+      </div>
+      <p style="margin-top:24px">Nesse momento: o Bombeiro sabe da cadeira de rodas, a PM sabe que a rua está bloqueada e a escola sabe que o elevador parou. <b>Ninguém vê as três coisas juntas.</b></p>
+    </div>
+    <div class="grid" style="gap:12px">
+      <div class="card soft"><h3>⏱ Minutos</h3><p class="small">gastos procurando informação que já existia.</p></div>
+      <div class="card soft"><h3>⚠ Decisões</h3><p class="small">tomadas com dado contraditório ou boato.</p></div>
+      <div class="card soft"><h3>📣 Confiança</h3><p class="small">de famílias que recebem versões diferentes.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Fonte do relato: cenário piloto fictício (01-cenario-piloto.md)</span><span></span></div>
+  <aside class="notes"><b>Dor — 60 s.</b> Leia a fala da mãe em tom baixo, sem dramatizar. Pausa de 3 segundos. Depois: “Nesse momento o Bombeiro sabe…, a PM sabe…, a escola sabe… Ninguém vê as três coisas juntas.”<br>Não cite números de perda: não temos medição, e um gestor experiente desconfia de número inventado. A dor fala por si.<br><em>Técnicas: história com rosto humano (âncora emocional), aversão à perda (custo da inação), linguagem visual (“vê”, “juntas”).</em></aside>
+</section>
+
+<!-- 4 FUTURE PACING -->
+<section class="slide dark" data-title="Imagine">
+  <div class="kicker">Agora imagine</div>
+  <h2 style="font-size:42px;max-width:1000px">Próxima ocorrência. Você abre o painel e, <span class="gold">em menos de um minuto</span>, enxerga:</h2>
+  <div class="grid g2" style="gap:16px;margin-top:6px">
+    <div class="card"><h3 style="color:#fff">✔ O que está confirmado — e por quem</h3><p class="small">Cada informação com autor, horário e a mensagem de origem.</p></div>
+    <div class="card"><h3 style="color:#fff">⚡ O que é só relato — e o que diverge</h3><p class="small">“18 alunos” contra “eram 20” lado a lado, sem ninguém somar no chute.</p></div>
+    <div class="card"><h3 style="color:#fff">⏳ Quem está devendo resposta</h3><p class="small">A pergunta pendente, para qual força, desde que horas.</p></div>
+    <div class="card"><h3 style="color:#fff">🧭 O que depende de quem</h3><p class="small">Bombeiros precisam do acesso da PM; perícia precisa do isolamento. Tudo ligado.</p></div>
+  </div>
+  <p style="margin-top:24px;font-size:22px;color:#fff">E a decisão continua sendo <b class="gold">sua</b>. Só que agora, bem informada.</p>
+  <div class="foot"><span>SEJUSP Integra</span><span></span></div>
+  <aside class="notes"><b>Futuro projetado — 60 s.</b> Fale no presente, como se já estivesse acontecendo: “Você abre o painel… você enxerga…”. Aponte para cada cartão.<br>“Em menos de um minuto” refere-se a ler o painel, não a gerar o painel — se questionado, diga exatamente isso.<br><em>Técnicas: future pacing (o gestor se vê usando o produto), comando embutido (“imagine”, “enxerga”), reforço de autonomia (“a decisão continua sendo sua”).</em></aside>
+</section>
+
+<!-- 5 N AGENTES -->
+<section class="slide" data-title="Sua equipe de agentes">
+  <div class="kicker">A solução</div>
+  <h2>Uma equipe de especialistas de IA que <span class="hl">você monta</span> — do tamanho da sua operação</h2>
+  <div class="grid g4" style="gap:14px">
+    <div class="agent" style="background:var(--coord)"><b>Coordenação</b><span>Lê tudo, organiza, consulta os especialistas e fala com você.</span></div>
+    <div class="agent" style="background:var(--bomb)"><b>Bombeiros</b><span>Salvamento, atendimento em andamento, recursos.</span></div>
+    <div class="agent" style="background:var(--pm)"><b>PM</b><span>Acesso, bloqueios, isolamento, segurança.</span></div>
+    <div class="agent" style="background:var(--pc)"><b>Polícia Científica</b><span>Relato × confirmação, demandas periciais.</span></div>
+    <div class="agent" style="background:var(--dc);opacity:.9"><b>Defesa Civil <small style="font-weight:500;opacity:.8">· exemplo</small></b><span>Áreas de risco, abrigos, alertas relatados.</span></div>
+    <div class="agent" style="background:var(--sau);opacity:.9"><b>Saúde <small style="font-weight:500;opacity:.8">· exemplo</small></b><span>Feridos relatados, encaminhamentos, leitos informados.</span></div>
+    <div class="agent" style="background:var(--tra);opacity:.9"><b>Trânsito <small style="font-weight:500;opacity:.8">· exemplo</small></b><span>Vias, desvios, interdições informadas.</span></div>
+    <div class="agent new"><b style="font-size:30px;line-height:1">+</b><b>Novo especialista</b><span style="opacity:1">Você define missão, limites e com quem conversa.</span></div>
+  </div>
+  <div class="grid g3" style="margin-top:20px;gap:14px">
+    <div class="card soft" style="padding:12px 16px"><b class="small" style="color:var(--navy)">Configurável</b><p class="small">Cada agente tem missão, permissões e limites escritos por você.</p></div>
+    <div class="card soft" style="padding:12px 16px"><b class="small" style="color:var(--navy)">Colaborativo</b><p class="small">Eles se consultam entre si quando há dependência entre forças.</p></div>
+    <div class="card soft" style="padding:12px 16px"><b class="small" style="color:var(--navy)">Escalável</b><p class="small">Começa com 4. Cresce para N — sem trocar de sistema.</p></div>
+  </div>
+  <div class="foot"><span>4 agentes já configurados na demonstração · demais são exemplos de expansão</span><span></span></div>
+  <aside class="notes"><b>Produto — 75 s.</b> Linha principal: “Não é um robô genérico. É uma equipe que você monta.” Mostre os 4 que já existem (cores fortes) e depois os exemplos (mais claros), terminando no “+”. Pergunte: “Qual especialista você colocaria aqui primeiro?” — e anote a resposta: ela será usada no fechamento.<br>Seja honesto: os exemplos ainda não foram configurados.<br><em>Técnicas: propriedade psicológica (efeito IKEA — o que a pessoa monta, ela valoriza), pergunta de envolvimento, escada de valor (4 → N).</em></aside>
+</section>
+
+<!-- 6 MOCK CONFIG -->
+<section class="slide" data-title="Você configura" style="padding-top:40px">
+  <span class="illus">Ilustração · tela de exemplo</span>
+  <div class="kicker">Você no controle</div>
+  <h2 style="margin-bottom:16px">Criar um especialista leva minutos — e as regras são suas</h2>
+  <div class="grid" style="grid-template-columns:1.5fr 1fr;gap:26px;align-items:start">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>SEJUSP Integra · Equipe › Novo agente especialista</span></div>
+      <div style="padding:10px 18px 14px">
+        <div class="field"><label>Nome</label><div style="display:flex;gap:8px;align-items:center"><span class="av" style="background:var(--dc);width:24px;height:24px;font-size:10px">DC</span><div class="input" style="flex:1">Defesa Civil</div></div></div>
+        <div class="field"><label>Missão</label><div class="input">Analisar áreas de risco, abrigos e alertas relatados; apontar lacunas com fonte e horário.</div></div>
+        <div class="field"><label>Pode</label><div><span class="chip ok">✓ ler o lote liberado</span><span class="chip ok">✓ consultar Bombeiros e PM</span><span class="chip ok">✓ responder com fontes</span></div></div>
+        <div class="field"><label>Não pode</label><div><span class="chip no">✕ emitir alerta oficial</span><span class="chip no">✕ decidir evacuação</span><span class="chip no">✕ alterar o painel</span></div></div>
+        <div class="field"><label>Conhecimento</label><div><span class="chip nt">📄 Plano de contingência</span><span class="chip nt">📄 Mapa de abrigos</span></div></div>
+        <div class="field"><label>Revisor humano</label><div class="input">Coordenador(a) da Defesa Civil</div></div>
+        <div class="field" style="border:0"><label>Canal</label><div style="display:flex;justify-content:space-between;align-items:center"><span class="chip nt"># santa-aurora</span><span style="background:var(--navy);color:#fff;border-radius:8px;padding:7px 14px;font-weight:700;font-size:13px">Adicionar à equipe</span></div></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card" style="border-left:4px solid var(--gold)"><h3>Missão em português</h3><p class="small">Sem programação. Você escreve o que o especialista faz, como escreveria para um novo servidor.</p></div>
+      <div class="card" style="border-left:4px solid var(--cont)"><h3>Limites explícitos</h3><p class="small">O que ele <b>não</b> pode fazer fica escrito — e vale para todos os agentes.</p></div>
+      <div class="card" style="border-left:4px solid var(--hum)"><h3>Um humano responde por ele</h3><p class="small">Cada especialista tem um revisor da força correspondente.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Tela ilustrativa; os 4 agentes atuais foram configurados com instruções equivalentes (04-instrucoes-dos-agentes.md)</span><span></span></div>
+  <aside class="notes"><b>Configuração — 60 s.</b> Se a gestão respondeu no slide anterior, troque mentalmente “Defesa Civil” pelo especialista citado: “Imagine o seu agente de ___ aqui”.<br>Ênfase em “Não pode”: é aqui que o gestor sente segurança.<br><em>Técnicas: controle percebido (reduz risco percebido), analogia familiar (“como escreveria para um novo servidor”), personalização com as palavras do cliente.</em></aside>
+</section>
+
+<!-- 7 MOCK INTERACAO -->
+<section class="slide" data-title="Você pergunta, a equipe responde" style="padding-top:40px">
+  <span class="illus">Ilustração · tela de exemplo</span>
+  <div class="kicker">Interação com o gestor</div>
+  <h2 style="margin-bottom:16px">Você pergunta em português. A equipe consulta as forças e responde com fonte</h2>
+  <div class="grid" style="grid-template-columns:1.55fr 1fr;gap:24px;align-items:start">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>SEJUSP Integra · #santa-aurora</span></div>
+      <div style="padding:14px 18px 6px">
+        <div class="msg"><span class="av" style="background:var(--navy)">G</span><div><div class="who">Gestor(a) <small>15:21</small></div><div class="txt"><b>@Coordenação</b> o que ainda impede a saída dos alunos da Escola Caminhos?</div></div></div>
+        <div class="relay"><span class="av" style="background:var(--coord)">CO</span> consultou <span class="av" style="background:var(--bomb)">BM</span><span class="av" style="background:var(--pm)">PM</span><span class="av" style="background:var(--dc)">DC</span> 3 especialistas · 40 s</div>
+        <div class="msg" style="margin-bottom:6px"><span class="av" style="background:var(--coord)">CO</span><div style="flex:1"><div class="who">Coordenação <small>15:22</small></div><div class="txt">Três pontos em aberto. Nenhum foi decidido por mim.</div>
+          <div class="answer">
+            <div class="row"><span class="pill s-conf">confirmado</span><span>18 alunos e 4 funcionários no 2º andar às 14h50, lista da secretaria</span><span class="src">COM-062</span></div>
+            <div class="row"><span class="pill s-rel">relatado</span><span>Elevador parado; uma aluna usa cadeira de rodas</span><span class="src">COM-030</span></div>
+            <div class="row"><span class="pill s-ag">aguardando PM</span><span>Acesso pela Rua Verde segue bloqueado; Rua Azul livre só num trecho — <b>não é rota segura</b></span><span class="src">COM-078</span></div>
+            <div class="row"><span class="pill s-ag">aguardando</span><span>Veículo adaptado V2: compatibilidade e acesso não confirmados</span><span class="src">COM-077</span></div>
+            <div class="row" style="display:block;border-top:1px dashed #cbd5e1;margin-top:4px;padding-top:6px"><b style="color:var(--navy)">Decisão necessária:</b>&nbsp;definir com Bombeiros e PM o meio de saída. Quer que eu pergunte algo específico?</div>
+          </div></div></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card soft"><h3>Pergunta aberta, resposta organizada</h3><p class="small">Sem filtro, sem planilha, sem ligar para três pessoas.</p></div>
+      <div class="card soft"><h3>Cada frase com fonte</h3><p class="small">Clique no código e veja a mensagem original.</p></div>
+      <div class="card soft"><h3>Honesta sobre o que falta</h3><p class="small">“Aguardando” aparece como aguardando — nunca como resposta inventada.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Tela ilustrativa com dados do cenário fictício (COM-030, 062, 077, 078)</span><span></span></div>
+  <aside class="notes"><b>Interação — 75 s. É o slide que vende.</b> Leia a pergunta do gestor em voz alta como se fosse a própria gestão perguntando. Depois percorra a resposta: confirmado, relatado, aguardando. Termine em “Decisão necessária” e diga: “Perceba quem decide aqui.” Pausa.<br>Se houver tempo e conexão, faça esta pergunta ao vivo no canal real — a demonstração ao vivo vale mais que qualquer slide. Tenha este slide como plano B.<br><em>Técnicas: demonstração do benefício (mostrar &gt; dizer), contraste (“sem ligar para três pessoas”), comando embutido (“perceba quem decide”).</em></aside>
+</section>
+
+<!-- 8 OBJECOES -->
+<section class="slide" data-title="Suas dúvidas, respondidas">
+  <div class="kicker">Antes que você pergunte</div>
+  <h2>As quatro perguntas que um bom gestor faz</h2>
+  <div style="border-top:1px solid #e8edf3">
+    <div class="obj"><div class="q">“A IA vai decidir no lugar da minha equipe?”</div><div class="a"><b>Não.</b> Os agentes propõem e organizam. Confirmar, corrigir e decidir são ações humanas, registradas com nome e horário.</div></div>
+    <div class="obj"><div class="q">“E se ela errar ou inventar?”</div><div class="a">Toda afirmação aponta a mensagem de origem. Divergências ficam <b>visíveis</b>, nunca resolvidas no chute. Falta de resposta aparece como “aguardando”.</div></div>
+    <div class="obj"><div class="q">“E os dados sensíveis?”</div><div class="a">Cada ocorrência é isolada; o painel compartilhado não expõe dados pessoais; o texto recebido nunca vira instrução — testamos isso de propósito.</div></div>
+    <div class="obj"><div class="q">“Quanto isso vai me custar para testar?”</div><div class="a">Um piloto curto, com cenário simulado, sem tocar na operação real. <b>Risco operacional zero</b> para começar.</div></div>
+  </div>
+  <div class="foot"><span>Regras de negócio: 02-processo-e-dados.md §7 · riscos: §9</span><span></span></div>
+  <aside class="notes"><b>Objeções — 75 s.</b> Antecipar as objeções mostra domínio e tira do gestor o papel de “advogado do diabo”. Responda de forma curta; se houver aprofundamento, ótimo, é sinal de interesse.<br>Sobre custo: não citar valores que não temos; foque em “risco operacional zero no piloto”. Se perguntarem preço, diga: “Vamos dimensionar juntos depois do piloto, com base no que você decidir manter.”<br><em>Técnicas: inoculação (tratar objeções antes que surjam), enquadramento de risco baixo, transferência de autoridade para o processo (“testamos de propósito”).</em></aside>
+</section>
+
+<!-- 9 PROVA -->
+<section class="slide dark" data-title="Não é promessa">
+  <div class="kicker">Prova</div>
+  <h2>Não estamos pedindo fé. Já está funcionando.</h2>
+  <div class="grid" style="grid-template-columns:1fr 1.05fr;gap:34px;align-items:start">
+    <div>
+      <div class="check"><span class="m ok">✓</span><p><b style="color:#fff">Ambiente montado</b>: canal da ocorrência e 4 agentes especialistas configurados.</p></div>
+      <div class="check"><span class="m ok">✓</span><p><b style="color:#fff">Agentes conversando entre si</b>: Coordenação consultou Bombeiros e PM e consolidou as respostas.</p></div>
+      <div class="check"><span class="m ok">✓</span><p><b style="color:#fff">Painel gerado</b>: dashboard versão 4, marcado como simulação, parcialmente revisado por humano.</p></div>
+      <div class="check"><span class="m ok">✓</span><p><b style="color:#fff">Cenário completo</b>: 80 comunicações com boatos, contradições e correções propositais.</p></div>
+      <div class="check" style="border:0"><span class="m part">→</span><p><b style="color:#fff">Próximo passo</b>: rodar o ciclo inteiro e medir — com você.</p></div>
+    </div>
+    <div class="win" style="box-shadow:0 22px 50px -18px rgba(0,0,0,.6)">
+      <div class="win-bar"><i></i><i></i><i></i><span>Captura real · canal #santa-aurora</span></div>
+      <div style="height:330px;overflow:hidden;background:#fff;display:flex;align-items:center"><img src="../evidencias/canal-santa-aurora-dashboard-v4.png" alt="Captura real do canal com o dashboard versão 4" style="width:154.2%;margin-left:-27.6%;display:block"></div>
+    </div>
+  </div>
+  <div class="foot"><span>Captura da demonstração DEMO-001 · dados fictícios</span><span></span></div>
+  <aside class="notes"><b>Prova — 60 s.</b> Aponte para a captura: “Isto não é desenho; é o sistema rodando.” Seja preciso: a captura é da demonstração DEMO-001, com a primeira versão da carga; o ciclo completo dos 4 lotes ainda será executado — e isso vira argumento: “É exatamente isso que queremos fazer com você.”<br>Nunca exagere aqui: se o gestor descobrir um exagero, a venda inteira cai.<br><em>Técnicas: prova concreta (reduz incerteza), transparência como credibilidade, transformar a lacuna em convite (“com você”).</em></aside>
+</section>
+
+<!-- 10 OFERTA -->
+<section class="slide" data-title="A proposta">
+  <div class="kicker">A proposta</div>
+  <h2>Um piloto curto, controlado e medido pelos <span class="hl">seus</span> critérios</h2>
+  <div class="grid g3" style="gap:18px">
+    <div class="phase"><div class="wk">Semana 1</div><h3 style="margin-top:6px">Montar a sua equipe</h3><p class="small">Você escolhe as forças e um especialista novo. Nós configuramos missão, limites e revisores com as suas equipes.</p></div>
+    <div class="phase"><div class="wk">Semanas 2–3</div><h3 style="margin-top:6px">Exercício simulado</h3><p class="small">Ciclo completo com 4 lotes de comunicações, revisão humana entre eles. Operadores reais, dados fictícios.</p></div>
+    <div class="phase" style="border:2px solid var(--gold);background:var(--goldbg)"><div class="wk">Semana 4</div><h3 style="margin-top:6px">Resultado na sua mesa</h3><p class="small">Comparação manual × assistido no mesmo lote, e a decisão: ampliar, ajustar ou parar.</p></div>
+  </div>
+  <h3 style="margin:26px 0 10px;color:var(--navy)">Como vamos medir o sucesso</h3>
+  <div class="grid g4" style="gap:12px">
+    <div class="card soft" style="padding:12px 14px"><p class="small"><b>Tempo</b> para consolidar um lote</p></div>
+    <div class="card soft" style="padding:12px 14px"><p class="small"><b>% de informações</b> com fonte rastreável</p></div>
+    <div class="card soft" style="padding:12px 14px"><p class="small"><b>Divergências</b> detectadas antes da decisão</p></div>
+    <div class="card soft" style="padding:12px 14px"><p class="small"><b>Avaliação</b> dos operadores das forças</p></div>
+  </div>
+  <div class="foot"><span>Cronograma e critérios propostos — a definir com a gestão</span><span></span></div>
+  <aside class="notes"><b>Oferta — 60 s.</b> Apresente como algo pequeno e reversível: “quatro semanas, sem tocar na operação, e você decide no fim”. A saída fácil (“ou parar”) aumenta a chance de o “sim” acontecer.<br>Pergunte: “Algum desses critérios você trocaria?” — quem ajusta os critérios já está dentro do projeto.<br><em>Técnicas: pé na porta (pedido pequeno primeiro), reversibilidade (reduz medo de errar), coautoria dos critérios (compromisso), ancoragem no resultado final.</em></aside>
+</section>
+
+<!-- 11 FECHAMENTO -->
+<section class="slide dark" data-title="Fechamento">
+  <div class="kicker">Recapitulando</div>
+  <div class="grid g3" style="gap:16px;margin-bottom:34px">
+    <div class="card"><h3 style="color:var(--gold2)">Tudo num só lugar</h3><p class="small">Relatos de todas as forças, com fonte e horário.</p></div>
+    <div class="card"><h3 style="color:var(--gold2)">Especialistas que você configura</h3><p class="small">De 4 a N agentes, com missão e limites seus.</p></div>
+    <div class="card"><h3 style="color:var(--gold2)">A decisão é sua</h3><p class="small">A IA organiza; quem confirma é sempre uma pessoa.</p></div>
+  </div>
+  <p style="font-size:22px;color:#9fb3d1">Na próxima ocorrência, a informação vai chegar de novo.</p>
+  <h1 style="font-size:52px;margin-top:8px;max-width:1080px">A pergunta é se ela vai <span class="gold">encontrar você a tempo.</span></h1>
+  <div style="margin-top:auto;display:flex;gap:16px;align-items:center">
+    <div style="background:var(--gold2);color:#0b2545;font-weight:800;border-radius:12px;padding:14px 22px;font-size:19px">Qual força entra primeiro na sua equipe de agentes?</div>
+    <span style="color:#9fb3d1;font-size:15px">Começamos o piloto com o cenário de enchente — ou com outro de sua escolha?</span>
+  </div>
+  <aside class="notes"><b>Fechamento — 45 s.</b> Recapitule os três pontos (regra de três). Diga a frase final devagar. Depois faça a pergunta do botão e <b>fique em silêncio</b>: quem fala primeiro depois da pergunta de fechamento perde força.<br>Se houver hesitação, use a pergunta alternativa: “Começamos com a enchente ou com outro cenário?” — as duas respostas levam ao piloto.<br><em>Técnicas: regra de três, fechamento por alternativa (escolha entre dois “sins”), pressuposição (“qual força entra primeiro” pressupõe que o piloto acontece), retomada do gancho inicial (circularidade da história), silêncio estratégico.</em></aside>
+</section>
+
+</div></div>
+
+<div class="ui"><div class="bar" id="bar"></div></div>
+<div class="counter" id="counter"></div>
+<div class="hint">← → navegar · N roteiro · F tela cheia</div>
+<div id="notesPanel"></div>
+<script>
+(function(){
+  var deck=document.getElementById('deck'),slides=[].slice.call(deck.querySelectorAll('.slide'));
+  var bar=document.getElementById('bar'),counter=document.getElementById('counter'),notes=document.getElementById('notesPanel');
+  if(new URLSearchParams(location.search).has('capture'))document.body.classList.add('capture');
+  var i=0;
+  function fit(){var nh=document.body.classList.contains('show-notes')?notes.offsetHeight:0;var pad=document.body.classList.contains('capture')?0:24;
+    var s=Math.min((innerWidth-pad)/1280,(innerHeight-pad-nh)/720);deck.style.transform='scale('+s+')';deck.parentNode.style.bottom=nh+'px';}
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i)});
+    bar.style.width=((i+1)/slides.length*100)+'%';counter.textContent=(i+1)+' / '+slides.length+' · '+slides[i].dataset.title;
+    var a=slides[i].querySelector('.notes');notes.innerHTML=a?a.innerHTML:'';history.replaceState(null,'','#'+(i+1));fit();}
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();show(i+1)}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1)}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='n'||e.key==='N'){document.body.classList.toggle('show-notes');fit()}
+    else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
+  document.addEventListener('click',function(e){if(e.target.closest('#notesPanel'))return;show(e.clientX>innerWidth/2?i+1:i-1)});
+  addEventListener('resize',fit);window.__show=show;window.__count=slides.length;
+  show((parseInt(location.hash.slice(1),10)||1)-1);
+})();
+</script>
+</body>
+</html>
